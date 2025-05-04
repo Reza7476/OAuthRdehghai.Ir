@@ -28,7 +28,10 @@ var app = builder.Build();
 //}
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options =>
+{
+    options.RoutePrefix = "swagger/index.html";
+});
 
 app.UseHttpsRedirection();
 
