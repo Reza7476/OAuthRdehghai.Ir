@@ -19,24 +19,23 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
     options.RoutePrefix = "swagger";
 });
 
 app.UseHttpsRedirection();
-app.UseAuthorization();
 
 app.UseRouting();
+
+app.UseAuthorization();
+
 app.UseStaticFiles();
 
-app.UseEndpoints(endpoints =>
+app.MapGet("/",  context =>
 {
-    endpoints.MapGet("/", context =>
-    {
-        context.Response.Redirect("/swagger/index.html");
-        return Task.CompletedTask; // اضافه کردن این خط برای رفع خطا
-    });
-    endpoints.MapControllers();
+    context.Response.Redirect("/swagger/index.html");
+    return Task.CompletedTask;
 });
+
 
 app.Run();
