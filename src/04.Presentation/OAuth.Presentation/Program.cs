@@ -14,13 +14,12 @@ builder.Host.AddAutofac();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddControllersWithViews();
+//builder.Services.AddControllersWithViews();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-//// Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
 //    app.UseSwagger();
@@ -28,10 +27,11 @@ var app = builder.Build();
 //}
 
 app.UseSwagger();
-app.UseSwaggerUI(options =>
-{
-    options.RoutePrefix = "swagger/index.html";
-});
+app.UseSwaggerUI();
+//options =>
+//{
+//    options.RoutePrefix = "index.html";
+//});
 
 app.UseHttpsRedirection();
 
@@ -39,13 +39,13 @@ app.UseAuthorization();
 
 app.UseRouting();
 app.UseStaticFiles();
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-    endpoints.MapControllers(); // برای API‌ها
-});
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllerRoute(
+//        name: "default",
+//        pattern: "{controller=Home}/{action=Index}/{id?}");
+//    endpoints.MapControllers(); // برای API‌ها
+//});
 
 
 
