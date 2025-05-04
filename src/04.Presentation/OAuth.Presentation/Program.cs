@@ -11,12 +11,15 @@ builder.Services
 builder.Host.AddAutofac();
 
 builder.Services.AddControllers();
+
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 app.UseSwagger();
+
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
@@ -36,6 +39,5 @@ app.MapGet("/",  context =>
     context.Response.Redirect("/swagger/index.html");
     return Task.CompletedTask;
 });
-
 
 app.Run();
