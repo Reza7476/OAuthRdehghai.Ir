@@ -1,0 +1,45 @@
+﻿using OAuth.Application.Services.Users.Contracts.Dto;
+using OAuth.Application.Services.Users.Exceptions;
+using OAuth.Application.Services.Users.Contracts;
+using OAuth.Core.Entities.Users;
+using OAuth.Common.Interfaces;
+
+namespace OAuth.Application.Services.Users;
+
+public class UserAppService : IUserService
+{
+
+    private readonly IUserRepository _repository;
+    private readonly IUnitOfWork _unitOfWork;
+    public UserAppService(IUserRepository repository,
+        IUnitOfWork unitOfWork)
+    {
+        _repository = repository;
+        _unitOfWork = unitOfWork;
+    }
+
+    public async Task<string> Add(AddUserDto dto)
+    {
+
+        if (await _repository.IsExistByUserName(dto.UserName))
+            throw new UserNameExistsException();
+
+        if (await _repository.IsExistByMobile(dto.Mobile))
+            throw new MobileIsExistException();
+
+        var user = new User()
+        {
+            Id=Guid.NewGuid().ToString(),
+            LastName = dto.LastName,
+            Mobile = dto.Mobile,
+            Name = dto.Name,
+            Password = dto.Password,
+            UserName = dto.UserName,
+        };
+
+        await _repository.Add(user);
+        await _unitOfWork.Complete();
+
+        return  user.Id;
+    }
+}
