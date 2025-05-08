@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OAuth.Application.Handlers.Users.Contracts;
 using OAuth.Infrastructure;
 using OAuth.Presentation.Configurations;
 
@@ -39,5 +40,19 @@ app.MapGet("/",  context =>
     context.Response.Redirect("/swagger/index.html");
     return Task.CompletedTask;
 });
+
+using(var scope = app.Services.CreateScope())
+{
+    var UserHandler = scope.ServiceProvider.GetRequiredService<IUserHandler>();
+
+    try
+    {
+        UserHandler.EnsureAdministratorIsExist().Wait();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"{ex.Message}");
+    }
+}
 
 app.Run();

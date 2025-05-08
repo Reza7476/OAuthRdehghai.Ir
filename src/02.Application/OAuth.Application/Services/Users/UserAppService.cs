@@ -42,4 +42,9 @@ public class UserAppService : IUserService
 
         return  user.Id;
     }
+
+    public async Task<bool> IsExistByUserName(string userName)
+    {
+        return await _repository.IsExistByUserName(userName);
+    }
 }
