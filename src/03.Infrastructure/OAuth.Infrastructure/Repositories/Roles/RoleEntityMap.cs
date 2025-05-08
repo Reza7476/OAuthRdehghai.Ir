@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace OAuth.Infrastructure.Repositories.Roles;
 
-public class SiteRoleEntityMap : IEntityTypeConfiguration<Role>
+public class RoleEntityMap : IEntityTypeConfiguration<Role>
 {
     public void Configure(EntityTypeBuilder<Role> _)
     {
