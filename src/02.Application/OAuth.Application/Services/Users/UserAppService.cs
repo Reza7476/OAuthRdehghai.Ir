@@ -33,7 +33,7 @@ public class UserAppService : IUserService
             LastName = dto.LastName,
             Mobile = dto.Mobile,
             Name = dto.Name,
-            Password = dto.Password,
+            HashPassword = dto.Password,
             UserName = dto.UserName,
         };
 
