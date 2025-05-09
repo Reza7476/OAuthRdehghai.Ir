@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OAuth.Application.Handlers.Users.Contracts;
-using OAuth.Infrastructure;
+﻿using OAuth.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using OAuth.Presentation.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +15,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSingleton<AdminInitializer>();
 
 var app = builder.Build();
 
@@ -35,24 +36,13 @@ app.UseAuthorization();
 
 app.UseStaticFiles();
 
-app.MapGet("/",  context =>
+app.MapGet("/", context =>
 {
     context.Response.Redirect("/swagger/index.html");
     return Task.CompletedTask;
 });
 
-using(var scope = app.Services.CreateScope())
-{
-    var UserHandler = scope.ServiceProvider.GetRequiredService<IUserHandler>();
-
-    try
-    {
-        UserHandler.EnsureAdministratorIsExist().Wait();
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"{ex.Message}");
-    }
-}
+var adminInitializer = app.Services.GetRequiredService<AdminInitializer>();
+adminInitializer.Initialize();
 
 app.Run();
