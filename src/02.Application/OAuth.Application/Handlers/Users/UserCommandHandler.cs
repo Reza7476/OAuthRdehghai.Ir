@@ -1,8 +1,12 @@
-﻿using OAuth.Application.Handlers.Users.Contracts;
+﻿using BCrypt.Net;
+using OAuth.Application.Handlers.Users.Contracts;
 using OAuth.Application.Services.Roles.Contracts;
 using OAuth.Application.Services.Roles.Contracts.Dto;
 using OAuth.Application.Services.Users.Contracts;
 using OAuth.Application.Services.Users.Contracts.Dto;
+using OAuth.Core.Entities.Sites;
+using OAuth.Core.Entities.Users;
+using OAuth.Core.Entities.UserSites;
 
 namespace OAuth.Application.Handlers.Users;
 
@@ -51,16 +55,31 @@ public class UserCommandHandler : IUserHandler
 
     private async Task<string> CreateUserAsAdministrator()
     {
+        var hashPass = BCrypt.Net.BCrypt.HashPassword("#Reza1420");
         var administratorDto = new AddUserDto()
         {
             LastName = "Dehghani",
             Mobile = "+989174367476",
             Name = "Reza",
-            Password = "123",
             UserName = "Administrator",
+            Password= hashPass,
         };
 
         var userId = await _userService.Add(administratorDto);
         return userId;
     }
+
+
+   
+
+    //public bool VerifyLogin(string username, string password)
+    //{
+    //    var user = _context.Users.FirstOrDefault(u => u.Username == username);
+    //    if (user == null || string.IsNullOrEmpty(user.PasswordHash))
+    //    {
+    //        return false;
+    //    }
+
+    //    return BCrypt.Verify(password, user.PasswordHash); // مقایسه رمز
+    //}
 }

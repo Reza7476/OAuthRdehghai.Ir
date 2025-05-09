@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\00.Common\OAuth.Common\OAuth.Common.csproj" />
     <ProjectReference Include="..\..\01.Core\OAuth.Core\OAuth.Core.csproj" />
   </ItemGroup>
