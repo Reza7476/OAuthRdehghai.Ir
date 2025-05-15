@@ -16,7 +16,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<AdminInitializer>();
+//builder.Services.AddSingleton<AdminInitializer>();
 
 var app = builder.Build();
 
@@ -42,7 +42,7 @@ app.MapGet("/", context =>
     return Task.CompletedTask;
 });
 
-var adminInitializer = app.Services.GetRequiredService<AdminInitializer>();
-adminInitializer.Initialize();
+//var adminInitializer = app.Services.GetRequiredService<AdminInitializer>();
+//adminInitializer.Initialize();
 
 app.Run();
