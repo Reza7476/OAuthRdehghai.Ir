@@ -61,6 +61,7 @@ public class UserCommandHandler : IUserHandler
         };
 
         var userId = await _userService.Add(administratorDto);
+
         return userId;
     }
 }

@@ -3,6 +3,7 @@ using OAuth.Application.Services.Users.Exceptions;
 using OAuth.Application.Services.Users.Contracts;
 using OAuth.Core.Entities.Users;
 using OAuth.Common.Interfaces;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace OAuth.Application.Services.Users;
 
@@ -27,13 +28,16 @@ public class UserAppService : IUserService
         if (await _repository.IsExistByMobile(dto.Mobile))
             throw new MobileIsExistException();
 
+
+        var hasPass=BCrypt.Net.BCrypt.HashPassword(dto.Password);   
+
         var user = new User()
         {
             Id=Guid.NewGuid().ToString(),
             LastName = dto.LastName,
             Mobile = dto.Mobile,
             Name = dto.Name,
-            HashPassword = dto.Password,
+            HashPassword = hasPass,
             UserName = dto.UserName,
         };
 
