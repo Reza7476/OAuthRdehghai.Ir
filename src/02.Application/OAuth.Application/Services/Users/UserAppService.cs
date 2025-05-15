@@ -1,9 +1,8 @@
-﻿using OAuth.Application.Services.Users.Contracts.Dto;
+﻿using OAuth.Application.Services.Users.Contracts;
+using OAuth.Application.Services.Users.Contracts.Dto;
 using OAuth.Application.Services.Users.Exceptions;
-using OAuth.Application.Services.Users.Contracts;
-using OAuth.Core.Entities.Users;
 using OAuth.Common.Interfaces;
-using static System.Net.Mime.MediaTypeNames;
+using OAuth.Core.Entities.Users;
 
 namespace OAuth.Application.Services.Users;
 
@@ -29,11 +28,11 @@ public class UserAppService : IUserService
             throw new MobileIsExistException();
 
 
-        var hasPass=BCrypt.Net.BCrypt.HashPassword(dto.Password);   
+        var hasPass = BCrypt.Net.BCrypt.HashPassword(dto.Password);
 
         var user = new User()
         {
-            Id=Guid.NewGuid().ToString(),
+            Id = Guid.NewGuid().ToString(),
             LastName = dto.LastName,
             Mobile = dto.Mobile,
             Name = dto.Name,
@@ -44,7 +43,12 @@ public class UserAppService : IUserService
         await _repository.Add(user);
         await _unitOfWork.Complete();
 
-        return  user.Id;
+        return user.Id;
+    }
+
+    public async Task<List<GetAllUsersDto>> GetAll()
+    {
+        return await _repository.GetAll();
     }
 
     public async Task<bool> IsExistByUserName(string userName)
