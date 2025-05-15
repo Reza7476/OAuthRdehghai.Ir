@@ -1,6 +1,7 @@
 ﻿using OAuth.Application.Services.Users.Contracts;
 using Microsoft.EntityFrameworkCore;
 using OAuth.Core.Entities.Users;
+using OAuth.Application.Services.Users.Contracts.Dto;
 
 namespace OAuth.Infrastructure.Repositories.Users;
 
@@ -16,6 +17,19 @@ public class EFUserRepository : IUserRepository
     public async Task Add(User user)
     {
        await _users.AddAsync(user);
+    }
+
+    public async Task<List<GetAllUsersDto>> GetAll()
+    {
+        return await _users.Select(_=> new GetAllUsersDto
+        {
+            Id=_.Id,
+            Name=_.Name,
+            LastName=_.LastName,
+            UserName=_.UserName,    
+            Mobile = _.Mobile   
+            
+        }).ToListAsync();   
     }
 
     public async Task<bool> IsExistByMobile(string mobile)

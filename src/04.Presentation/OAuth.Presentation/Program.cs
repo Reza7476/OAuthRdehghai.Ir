@@ -1,8 +1,13 @@
 ﻿using OAuth.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using OAuth.Presentation.Configurations;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Configure Serilog
+
+builder.Host.UseSerilog();
 
 builder.Services
     .AddDbContext<EFDataContext>(option =>
@@ -19,6 +24,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<AdminInitializer>();
 
 var app = builder.Build();
+
+// Enable request logging
+app.UseSerilogRequestLogging();
 
 app.UseSwagger();
 
@@ -44,5 +52,7 @@ app.MapGet("/", context =>
 
 var adminInitializer = app.Services.GetRequiredService<AdminInitializer>();
 adminInitializer.Initialize();
+
+app.MapControllers();
 
 app.Run();

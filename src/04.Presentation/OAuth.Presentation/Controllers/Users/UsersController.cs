@@ -22,4 +22,10 @@ public class UsersController : Controller
         return await _service.Add(dto);
     }
 
+    [HttpGet("all")]
+    public async Task<List<GetAllUsersDto>> GetAll()
+    {
+        return await _service.GetAll();
+    }
+
 }
