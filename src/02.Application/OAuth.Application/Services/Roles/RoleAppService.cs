@@ -44,4 +44,9 @@ public class RoleAppService : IRoleService
         await _repository.AssignRoleToUser(userRole);
         await _unitOfWork.Complete();
     }
+
+    public async Task<List<string>> GetUserRolesByUserId(string userId)
+    {
+        return await _repository.GetUserRolesByUserId(userId);
+    }
 }

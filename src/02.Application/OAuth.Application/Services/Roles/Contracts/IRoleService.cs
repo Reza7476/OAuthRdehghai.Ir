@@ -7,4 +7,5 @@ public interface IRoleService : IService
 {
     Task<long> Add(AddRoleDto roleDto);
     Task AssignRoleToUser(string adminId, long roleId);
+    Task<List<string>> GetUserRolesByUserId(string userId);
 }

@@ -1,16 +1,23 @@
-﻿using OAuth.Application.Services.Users.Contracts;
+﻿using OAuth.Application.Handlers.Registers.Exceptions;
+using OAuth.Application.Services.Sites.Contarcts;
+using OAuth.Application.Services.Sites.Exceptions;
+using OAuth.Application.Services.Users.Contracts;
 using OAuth.Application.Services.Users.Contracts.Dto;
 using OAuth.Application.Services.Users.Exceptions;
 using OAuth.Common.Interfaces;
 using OAuth.Core.Entities.Users;
+using OAuth.Core.Entities.UserSites;
+using System.Security.Claims;
+using System.Text;
 
 namespace OAuth.Application.Services.Users;
 
 public class UserAppService : IUserService
 {
-
     private readonly IUserRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ISiteRepository _siteRepository;
+
     public UserAppService(IUserRepository repository,
         IUnitOfWork unitOfWork)
     {
@@ -46,6 +53,21 @@ public class UserAppService : IUserService
         return user.Id;
     }
 
+    public async Task<GetUserInfoForJwtDto> CheckUserAndReturnUserInfoForJwt(string userName, string password)
+    {
+
+        var userInfo = await _repository.IsExistByUserNameAndReturnUserInfoForJwt(userName);
+        if (userInfo == null)
+            throw new UserNotFoundException();
+
+        if (!(BCrypt.Net.BCrypt.Verify(password, userInfo.HashPass)))
+            throw new PasswordIsIncorrectException();
+
+        return userInfo;
+
+
+    }
+
     public async Task<List<GetAllUsersDto>> GetAll()
     {
         return await _repository.GetAll();
@@ -55,4 +77,6 @@ public class UserAppService : IUserService
     {
         return await _repository.IsExistByUserName(userName);
     }
+
+
 }
