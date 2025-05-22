@@ -10,4 +10,6 @@ public interface IUserRepository : IRepository
     Task<List<GetAllUsersDto>> GetAll();
     Task<bool> IsExistByMobile(string mobile);
     Task<bool> IsExistByUserName(string userName);
+    Task<GetUserInfoForJwtDto?> IsExistByUserNameAndReturnUserInfoForJwt(string userName);
+    Task<bool> PasswordIsCorrect(string userId, string hashPass);
 }

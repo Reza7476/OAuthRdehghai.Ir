@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OAuth.Core.Entities.Users;
 using System.Reflection;
 
 namespace OAuth.Infrastructure;

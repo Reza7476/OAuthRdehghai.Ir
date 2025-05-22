@@ -22,7 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<AdminInitializer>();
-
+builder.Services.AddJwtAuthontecation(builder.Configuration);
 var app = builder.Build();
 
 // Enable request logging
