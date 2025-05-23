@@ -22,7 +22,7 @@ public class JwtTokenService : IJwtTokenGenerator
         {
             new Claim(JwtRegisteredClaimNames.Sub, dto.UserId),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim("site", dto.SiteAudience),
+            new Claim("Site", dto.SiteAudience),
             new Claim("Phone_Number",dto.Mobile),
             new Claim("FirstName",dto.FirstName),
             new Claim("LastName",dto.LastName)
