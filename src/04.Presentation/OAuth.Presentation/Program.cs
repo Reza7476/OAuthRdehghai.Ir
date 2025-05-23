@@ -5,8 +5,6 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Configure Serilog
-
 builder.Host.UseSerilog();
 
 builder.Services
@@ -56,5 +54,6 @@ var adminInitializer = app.Services.GetRequiredService<AdminInitializer>();
 adminInitializer.Initialize();
 
 app.MapControllers();
+
 
 app.Run();

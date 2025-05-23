@@ -1,7 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using OAuth.Application.JwtTokenService;
 using OAuth.Application.JwtTokenService.Dtos;
-using OAuth.Core.Entities.Users;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -28,9 +27,9 @@ public class JwtTokenService : IJwtTokenGenerator
         };
         if (dto.UserRole != null)
         {
-            foreach(var role in dto.UserRole)
+            foreach (var role in dto.UserRole)
             {
-                claims.Add(new Claim(ClaimTypes.Role, role));   
+                claims.Add(new Claim(ClaimTypes.Role, role));
             }
         }
 

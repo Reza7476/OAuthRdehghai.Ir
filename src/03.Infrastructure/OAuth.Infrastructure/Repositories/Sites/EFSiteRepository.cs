@@ -9,11 +9,11 @@ public class EFSiteRepository : ISiteRepository
 {
     private readonly DbSet<Site> _sites;
     private readonly DbSet<UserSite> _userSite;
+    
     public EFSiteRepository(EFDataContext context)
     {
         _sites = context.Set<Site>();
         _userSite = context.Set<UserSite>();
-
     }
 
     public async Task<bool> checkUserSite(long id, string userId)
@@ -23,11 +23,8 @@ public class EFSiteRepository : ISiteRepository
 
     public async Task<Site?> GetSiteBySiteName(string siteAudience)
     {
-        var a = await _sites
+        return await _sites
               .Where(_ => _.SiteUrl == siteAudience)
               .FirstOrDefaultAsync();
-        return a;
     }
-
-
 }
