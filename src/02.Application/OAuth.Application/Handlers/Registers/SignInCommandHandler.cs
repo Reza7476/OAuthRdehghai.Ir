@@ -39,6 +39,8 @@ public class SignInCommandHandler : ISignInHandler
             UserId=userInfo.Id,
             UserRole=getUserRole,
             SiteAudience=dto.SiteAudience,
+            FirstName=userInfo.FirstName,
+            LastName=userInfo.LastName,
         });
         return jwtToken;
 

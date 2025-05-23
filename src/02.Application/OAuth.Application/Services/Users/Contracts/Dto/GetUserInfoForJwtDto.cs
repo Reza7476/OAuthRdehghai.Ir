@@ -2,7 +2,9 @@
 
 public class GetUserInfoForJwtDto
 {
-    public string  Mobile { get; set; }
-    public string Id { get; set; }
-    public string HashPass { get; set; }
+    public required string  Mobile { get; set; }
+    public required string Id { get; set; }
+    public required string HashPass { get; set; }
+    public required string FirstName { get; set; }
+    public required string LastName { get; set; }
 }
