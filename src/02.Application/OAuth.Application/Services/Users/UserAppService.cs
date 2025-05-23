@@ -16,7 +16,6 @@ public class UserAppService : IUserService
 {
     private readonly IUserRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly ISiteRepository _siteRepository;
 
     public UserAppService(IUserRepository repository,
         IUnitOfWork unitOfWork)
@@ -64,8 +63,6 @@ public class UserAppService : IUserService
             throw new PasswordIsIncorrectException();
 
         return userInfo;
-
-
     }
 
     public async Task<List<GetAllUsersDto>> GetAll()
