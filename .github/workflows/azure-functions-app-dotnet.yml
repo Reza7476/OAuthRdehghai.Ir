@@ -20,10 +20,13 @@ jobs:
         run: dotnet restore
 
       - name: Build project
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release --no-restore 
 
       - name: Publish project
-        run: dotnet publish --configuration Release --no-restore --output ./publish
+        run: dotnet publish --configuration Release --no-restore --output ./publish/ --self-contained false
+      
+      - name: List published files
+        run: ls -laR ./publish
 
       - name: Deploy to Production via FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.0
