@@ -6,7 +6,7 @@ namespace OAuth.Presentation.Controllers.Registers;
 
 [ApiController]
 [Route("api/SignIn")]
-public class SignInController : ControllerBase
+public class SignInController : Controller
 {
     private readonly ISignInHandler _signHandler;
 
@@ -21,8 +21,7 @@ public class SignInController : ControllerBase
     {
         try
         {
-
-        return await _signHandler.LogIn(dto);
+            return await _signHandler.LogIn(dto);
         }
         catch (Exception ex)
         {
