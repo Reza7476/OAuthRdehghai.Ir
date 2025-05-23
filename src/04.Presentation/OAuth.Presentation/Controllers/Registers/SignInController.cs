@@ -26,7 +26,7 @@ public class SignInController : Controller
         catch (Exception ex)
         {
 
-            throw new Exception(ex.Message);
+            throw new Exception(ex.ToString());
         }
     }
 }
