@@ -4,8 +4,10 @@ namespace OAuth.Application.JwtTokenService.Dtos;
 
 public class UserInfoForJwtDto
 {
-    public string Mobile  { get; set; }
-    public string UserId { get; set; }
+    public required string Mobile  { get; set; }
+    public required string UserId { get; set; }
     public List<string> UserRole { get; set; }
-    public string SiteAudience { get; internal set; }
+    public required string SiteAudience { get;  set; }
+    public required string FirstName { get; set; }
+    public required string LastName { get; set; }
 }

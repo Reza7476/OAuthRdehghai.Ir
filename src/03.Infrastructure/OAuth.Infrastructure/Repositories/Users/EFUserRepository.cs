@@ -51,7 +51,9 @@ public class EFUserRepository : IUserRepository
             {
                 Id= _.Id,
                 Mobile=_.Mobile,
-                HashPass=_.HashPassword
+                HashPass=_.HashPassword,
+                FirstName=_.Name,
+                LastName=_.LastName,
             }).FirstOrDefaultAsync();
     }
 
