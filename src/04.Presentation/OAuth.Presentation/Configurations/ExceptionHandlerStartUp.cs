@@ -31,7 +31,7 @@ public static class ExceptionHandlerStartUp
 
             if (!environment.IsDevelopment())
             {
-                if (isAssignToCustomException == true)
+                if (exception is CustomException )
                 {
                     result.Error = exception?.GetType()
                          .Name.Replace("Exception", string.Empty);
@@ -53,7 +53,7 @@ public static class ExceptionHandlerStartUp
             await context.Response.WriteAsync(JsonSerializer.Serialize(result, jsonOptions));
         }));
 
-        // if(environment.IsDevelopment()) app.UseHsts();
+         if(environment.IsDevelopment()) app.UseHsts();
 
 
         return app;
