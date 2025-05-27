@@ -23,6 +23,7 @@ builder.Services.AddSingleton<AdminInitializer>();
 
 //builder.Services.AddJwtAuthontecation(builder.Configuration);
 
+
 var app = builder.Build();
 app.UseRezaExceptionHandler();
 
