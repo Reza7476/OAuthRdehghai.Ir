@@ -1,8 +1,7 @@
-﻿using OAuth.Infrastructure;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using OAuth.Infrastructure;
 using OAuth.Presentation.Configurations;
 using Serilog;
-using OAuth.Presentation.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +22,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<AdminInitializer>();
 
 //builder.Services.AddJwtAuthontecation(builder.Configuration);
+
 
 var app = builder.Build();
 app.UseRezaExceptionHandler();
