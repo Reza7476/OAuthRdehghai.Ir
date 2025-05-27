@@ -1,8 +1,7 @@
-﻿using OAuth.Infrastructure;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using OAuth.Infrastructure;
 using OAuth.Presentation.Configurations;
 using Serilog;
-using OAuth.Presentation.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
