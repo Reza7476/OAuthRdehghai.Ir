@@ -12,7 +12,9 @@ public  static class ExceptionHandlerStartUp
 {
     public static  IApplicationBuilder UseRezaExceptionHandler(this IApplicationBuilder app)
     {
-        var environment = app.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
+        var environment = app.ApplicationServices
+            .GetRequiredService<IWebHostEnvironment>();
+
         var jsonOptions = app.ApplicationServices
             .GetService<IOptions<JsonOptions>>()?.Value.SerializerOptions;
 
@@ -20,20 +22,25 @@ public  static class ExceptionHandlerStartUp
         {
             var exception = context.Features
                 .Get<IExceptionHandlerPathFeature>()?.Error;
-            var isAssignToCustomException = exception?.GetType().IsAssignableTo(typeof(CustomException));
+
+            var isAssignToCustomException = exception?.GetType()
+                .IsAssignableTo(typeof(CustomException));
+
             const string errorProduction = "UnknownError";
 
             var result = new ExceptionErrorDto();
+
             if (!environment.IsDevelopment())
             {
-                if (isAssignToCustomException is false)
+                if (isAssignToCustomException !=false)
                 {
                     result.Error = errorProduction;
                     result.Description = null;
                 }
                 else
                 {
-                    result.Error = exception?.GetType().Name.Replace("Exception", string.Empty);
+                    result.Error = exception?.GetType()
+                         .Name.Replace("Exception", string.Empty);
                     result.Description = null;
                 }
             }
@@ -48,7 +55,7 @@ public  static class ExceptionHandlerStartUp
             await context.Response.WriteAsync(JsonSerializer.Serialize(result, jsonOptions));
         }));
 
-        if(environment.IsDevelopment()) app.UseHsts();
+       // if(environment.IsDevelopment()) app.UseHsts();
 
 
         return app;
