@@ -40,7 +40,7 @@ public static class ExceptionHandlerStartUp
                 else
                 {
                     result.Error = errorProduction;
-                    result.Description = null;
+                    result.Description = exception?.ToString();
                 }
             }
             else
