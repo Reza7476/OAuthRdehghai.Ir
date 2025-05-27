@@ -19,14 +19,8 @@ public class SignInController : Controller
     [HttpPost("login")]
     public async Task<string> SignIn(LogInDto dto)
     {
-        try
-        {
+       
             return await _signHandler.LogIn(dto);
-        }
-        catch (Exception ex)
-        {
-
-            throw new Exception(ex.ToString());
-        }
+        
     }
 }

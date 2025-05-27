@@ -22,6 +22,8 @@ public static class ExceptionHandlerStartUp
             var exception = context.Features
                 .Get<IExceptionHandlerPathFeature>()?.Error;
 
+            await Console.Out.WriteLineAsync( $"{exception}"  );
+
             var isAssignToCustomException = exception?.GetType()
                 .IsAssignableTo(typeof(CustomException));
 
