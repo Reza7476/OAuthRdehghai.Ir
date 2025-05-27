@@ -2,6 +2,6 @@
 
 namespace OAuth.Application.Services.Users.Exceptions;
 
-internal class UserNotFoundException : CustomException
+public class UserNotFoundException : CustomException
 {
 }
