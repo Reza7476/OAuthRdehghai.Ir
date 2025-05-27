@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using OAuth.Presentation.Configurations;
 using Serilog;
+using OAuth.Presentation.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,7 +36,7 @@ app.UseSwaggerUI(options =>
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
     options.RoutePrefix = "swagger";
 });
-
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseRouting();
