@@ -25,8 +25,8 @@ builder.Services.AddSingleton<AdminInitializer>();
 //builder.Services.AddJwtAuthontecation(builder.Configuration);
 
 var app = builder.Build();
+app.UseRezaExceptionHandler();
 
-// Enable request logging
 app.UseSerilogRequestLogging();
 
 app.UseSwagger();
@@ -36,7 +36,8 @@ app.UseSwaggerUI(options =>
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
     options.RoutePrefix = "swagger";
 });
-app.UseMiddleware<ExceptionMiddleware>();
+
+
 app.UseHttpsRedirection();
 
 app.UseRouting();

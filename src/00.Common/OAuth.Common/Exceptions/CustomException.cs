@@ -1,5 +1,5 @@
 ﻿namespace OAuth.Common.Exceptions;
 
-public class CustomException:Exception
+public class CustomException : Exception
 {
 }
