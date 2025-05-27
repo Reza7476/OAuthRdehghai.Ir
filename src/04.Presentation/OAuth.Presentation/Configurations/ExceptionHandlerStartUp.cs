@@ -3,14 +3,13 @@ using Microsoft.AspNetCore.Http.Json;
 using Microsoft.Extensions.Options;
 using OAuth.Common.Exceptions;
 using System.Net.Mime;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace OAuth.Presentation.Configurations;
 
-public  static class ExceptionHandlerStartUp
+public static class ExceptionHandlerStartUp
 {
-    public static  IApplicationBuilder UseRezaExceptionHandler(this IApplicationBuilder app)
+    public static IApplicationBuilder UseRezaExceptionHandler(this IApplicationBuilder app)
     {
         var environment = app.ApplicationServices
             .GetRequiredService<IWebHostEnvironment>();
@@ -32,22 +31,21 @@ public  static class ExceptionHandlerStartUp
 
             if (!environment.IsDevelopment())
             {
-                if (isAssignToCustomException !=false)
+                if (isAssignToCustomException == true)
                 {
-                    result.Error = errorProduction;
+                    result.Error = exception?.GetType()
+                         .Name.Replace("Exception", string.Empty);
                     result.Description = null;
                 }
                 else
                 {
-                    result.Error = exception?.GetType()
-                         .Name.Replace("Exception", string.Empty);
+                    result.Error = errorProduction;
                     result.Description = null;
                 }
             }
             else
             {
                 result.Error = exception?.GetType().Name.Replace("Exception", string.Empty);
-
                 result.Description = exception?.ToString();
             }
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
@@ -55,7 +53,7 @@ public  static class ExceptionHandlerStartUp
             await context.Response.WriteAsync(JsonSerializer.Serialize(result, jsonOptions));
         }));
 
-       // if(environment.IsDevelopment()) app.UseHsts();
+        // if(environment.IsDevelopment()) app.UseHsts();
 
 
         return app;
