@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuth.Presentation", "src\0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuth.Application", "src\02.Application\OAuth.Application\OAuth.Application.csproj", "{F546D0A9-3C65-42F7-96DB-D1F6E9DDD070}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuthTest", "test\OAuthTest\OAuthTest\OAuthTest.csproj", "{524A49BE-1A0E-4C5F-B39C-02B375817F9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthTest", "test\OAuthTest\OAuthTest\OAuthTest.csproj", "{524A49BE-1A0E-4C5F-B39C-02B375817F9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestJwt", "test\TestJwt\TestJwt.csproj", "{6587C067-3754-43A9-9A8A-C946283A0645}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{524A49BE-1A0E-4C5F-B39C-02B375817F9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{524A49BE-1A0E-4C5F-B39C-02B375817F9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{524A49BE-1A0E-4C5F-B39C-02B375817F9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6587C067-3754-43A9-9A8A-C946283A0645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6587C067-3754-43A9-9A8A-C946283A0645}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6587C067-3754-43A9-9A8A-C946283A0645}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6587C067-3754-43A9-9A8A-C946283A0645}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{49212561-878F-4ACB-B476-7DFC4495D47C} = {652A9CAE-80E3-4681-9A13-E8154DC6E5E7}
 		{F546D0A9-3C65-42F7-96DB-D1F6E9DDD070} = {A511754C-8CD7-4A12-B161-202D3248C498}
 		{524A49BE-1A0E-4C5F-B39C-02B375817F9A} = {1BFB2E52-FB9D-4632-817B-32DAE6C3C5D0}
+		{6587C067-3754-43A9-9A8A-C946283A0645} = {1BFB2E52-FB9D-4632-817B-32DAE6C3C5D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A66E822A-085E-425E-B118-20930BE13504}

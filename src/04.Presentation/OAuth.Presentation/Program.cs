@@ -1,6 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OAuth.Infrastructure;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using OAuth.Presentation.Configurations;
+using Microsoft.IdentityModel.Tokens;
+using OAuth.Infrastructure;
+using System.Text;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,23 +23,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerConfigGen();
 
 builder.Services.AddSingleton<AdminInitializer>();
-
-builder.Services.AddJwtAuthontecation(builder.Configuration);
-
+builder.Services.AddJwtAuthenticationConfig(builder.Configuration);
 
 var app = builder.Build();
-
-app.UseRezaExceptionHandler();
-
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseAuthentication();
-app.UseAuthorization();
-
 app.UseSwagger();
+
+app.UseRezaExceptionHandler();
+
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
@@ -51,7 +49,8 @@ app.MapGet("/", context =>
 
 var adminInitializer = app.Services.GetRequiredService<AdminInitializer>();
 adminInitializer.Initialize();
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 
