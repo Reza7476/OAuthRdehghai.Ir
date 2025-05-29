@@ -17,34 +17,31 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerConfigGen();
 
 builder.Services.AddSingleton<AdminInitializer>();
 
-//builder.Services.AddJwtAuthontecation(builder.Configuration);
+builder.Services.AddJwtAuthontecation(builder.Configuration);
 
 
 var app = builder.Build();
+
 app.UseRezaExceptionHandler();
 
 app.UseSerilogRequestLogging();
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseSwagger();
-
 app.UseSwaggerUI(options =>
 {
     options.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
     options.RoutePrefix = "swagger";
 });
-
-
-app.UseHttpsRedirection();
-
-app.UseRouting();
-
-app.UseAuthorization();
-
-app.UseStaticFiles();
 
 app.MapGet("/", context =>
 {
