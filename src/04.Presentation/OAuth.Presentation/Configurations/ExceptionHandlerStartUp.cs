@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http.Json;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using OAuth.Common.Exceptions;
 using System.Net.Mime;
@@ -22,15 +21,16 @@ public static class ExceptionHandlerStartUp
         {
             var exception = context.Features
                 .Get<IExceptionHandlerPathFeature>()?.Error;
-
-            await Console.Out.WriteLineAsync($"{exception}");
-
-            var isAssignToCustomException = exception?.GetType()
+            
+            var isAssignToCustomException = exception?
+                .GetType()
                 .IsAssignableTo(typeof(CustomException));
 
             const string errorProduction = "UnknownError";
 
             var result = new ExceptionErrorDto();
+
+            result.StatusCode = context.Response.StatusCode;
 
             if (!environment.IsDevelopment())
             {
@@ -39,29 +39,24 @@ public static class ExceptionHandlerStartUp
                     result.Error = exception?.GetType()
                          .Name.Replace("Exception", string.Empty);
                     result.Description = null;
-                    result.StatusCode = context.Response.StatusCode;
                 }
                 else
                 {
                     result.Error = errorProduction;
                     result.Description = exception?.ToString();
-                    result.StatusCode = context.Response.StatusCode;
                 }
             }
             else
             {
                 result.Error = exception?.GetType().Name.Replace("Exception", string.Empty);
                 result.Description = exception?.ToString();
-                result.StatusCode = context.Response.StatusCode;
             }
-            //context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Response.ContentType = MediaTypeNames.Application.Json;
             await context.Response.WriteAsync(JsonSerializer.Serialize(result, jsonOptions));
         }));
 
         if (environment.IsDevelopment()) app.UseHsts();
-
-
+        
         return app;
     }
 }
