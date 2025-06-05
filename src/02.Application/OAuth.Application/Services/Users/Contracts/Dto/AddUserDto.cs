@@ -7,4 +7,5 @@ public class AddUserDto
     public required string Mobile { get; set; }
     public required string UserName { get; set; }
     public required string Password { get; set; }
+    public required string Email { get; set; }
 }

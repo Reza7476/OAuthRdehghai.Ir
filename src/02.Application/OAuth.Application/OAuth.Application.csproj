@@ -15,4 +15,9 @@
     <ProjectReference Include="..\..\01.Core\OAuth.Core\OAuth.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Handlers\Google\Contracts\Dtos\" />
+    <Folder Include="Handlers\Google\Exceptions\" />
+  </ItemGroup>
+
 </Project>

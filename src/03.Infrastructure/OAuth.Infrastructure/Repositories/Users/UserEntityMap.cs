@@ -12,15 +12,15 @@ public class UserEntityMap : IEntityTypeConfiguration<User>
         
         _.Property(_ => _.Id).IsRequired();
         
-        _.Property(_ => _.Name).IsRequired();
+        _.Property(_ => _.Name).IsRequired(false);
         
-        _.Property(_ => _.LastName).IsRequired();
+        _.Property(_ => _.LastName).IsRequired(false);
         
-        _.Property(_ => _.Mobile).IsRequired();
+        _.Property(_ => _.Mobile).IsRequired(false);
         
-        _.Property(_ => _.UserName).IsRequired();
+        _.Property(_ => _.UserName).IsRequired(false);
         
-        _.Property(_ => _.HashPassword).IsRequired();
+        _.Property(_ => _.HashPassword).IsRequired(false);
         
         _.Property(_=>_.CreationDate).IsRequired(false);
 

@@ -1,14 +1,9 @@
 ﻿using OAuth.Application.Handlers.Registers.Exceptions;
-using OAuth.Application.Services.Sites.Contarcts;
-using OAuth.Application.Services.Sites.Exceptions;
 using OAuth.Application.Services.Users.Contracts;
 using OAuth.Application.Services.Users.Contracts.Dto;
 using OAuth.Application.Services.Users.Exceptions;
 using OAuth.Common.Interfaces;
 using OAuth.Core.Entities.Users;
-using OAuth.Core.Entities.UserSites;
-using System.Security.Claims;
-using System.Text;
 
 namespace OAuth.Application.Services.Users;
 
@@ -44,6 +39,7 @@ public class UserAppService : IUserService
             Name = dto.Name,
             HashPassword = hasPass,
             UserName = dto.UserName,
+            Email = dto.Email,
         };
 
         await _repository.Add(user);
@@ -52,17 +48,48 @@ public class UserAppService : IUserService
         return user.Id;
     }
 
-    public async Task<GetUserInfoForJwtDto> CheckUserAndReturnUserInfoForJwt(string userName, string password)
+    public async Task<string> AddUserByEmail(string email)
     {
+        var userId = await _repository.GetUserIdByEmail(email);
 
-        var userInfo = await _repository.IsExistByUserNameAndReturnUserInfoForJwt(userName);
-        if (userInfo == null)
+        if (userId != null)
+        {
+            return userId;
+        }
+        else
+        {
+            var newUser = new User()
+            {
+                Id = Guid.NewGuid().ToString(),
+                CreationDate = DateTime.UtcNow,
+                Email = email,
+            };
+
+            await _repository.Add(newUser);
+            await _unitOfWork.Complete();
+            return newUser.Id;
+        }
+
+    }
+
+    public async Task<GetUserInfoForJwtDto> CheckUserAndReturnUserInfoForJwt(
+        string userName,
+        string password)
+    {
+        var user = await _repository.GetByUserName(userName);
+        if (user == null)
             throw new UserNotFoundException();
 
-        if (!(BCrypt.Net.BCrypt.Verify(password, userInfo.HashPass)))
+        if (!(BCrypt.Net.BCrypt.Verify(password, user.HashPassword)))
             throw new PasswordIsIncorrectException();
 
-        return userInfo;
+        return new GetUserInfoForJwtDto()
+        {
+            Id = user.Id,
+            Mobile = user.Mobile,
+            FirstName = user.Name,
+            LastName = user.LastName,
+        };
     }
 
     public async Task<List<GetAllUsersDto>> GetAll()
@@ -70,10 +97,18 @@ public class UserAppService : IUserService
         return await _repository.GetAll();
     }
 
+    public async Task<GetUserInfoByEmailForJwtDto?> GetUserInfoByEmailAndSiteUrl(string email, string url)
+    {
+        return await _repository.GetUserInfoByEmailAndSiteUrl(email, url);
+    }
+
+    public async Task<List<string>> GetUserRoles(string id, long siteId)
+    {
+        return await _repository.GetUserRoles(id,siteId);
+    }
+
     public async Task<bool> IsExistByUserName(string userName)
     {
         return await _repository.IsExistByUserName(userName);
     }
-
-
 }
