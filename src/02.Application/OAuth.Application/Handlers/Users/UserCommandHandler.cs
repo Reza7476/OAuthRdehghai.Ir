@@ -22,7 +22,6 @@ public class UserCommandHandler : IUserHandler
 
     public async Task EnsureAdministratorIsExist()
     {
-        var adminIsExist = await _userService.IsExistByUserName("Administrator");
         if (!await _userService.IsExistByUserName("Administrator"))
         {
             var adminId = await CreateUserAsAdministrator();
@@ -58,6 +57,7 @@ public class UserCommandHandler : IUserHandler
             Name = "Reza",
             Password = "123",
             UserName = "Administrator",
+            Email = "rdehghani.akorn@gamil.com"
         };
 
         var userId = await _userService.Add(administratorDto);
