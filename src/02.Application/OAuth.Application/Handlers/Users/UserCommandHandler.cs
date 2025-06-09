@@ -57,7 +57,7 @@ public class UserCommandHandler : IUserHandler
             Name = "Reza",
             Password = "123",
             UserName = "Administrator",
-            Email = "rdehghani.akorn@gamil.com"
+            Email = "rdehghani.akorn@gmail.com"
         };
 
         var userId = await _userService.Add(administratorDto);
