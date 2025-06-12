@@ -30,6 +30,8 @@ public class LoginWithGoogleHandler : ILoginWithGoogleHandler
 
     public async Task<string> LoginWithGoogle(LogInWithGoogleDto dto)
     {
+        if (dto.FullName == null)
+            dto.FullName = dto.Email;
         var userInfo = await _userService.GetUserInfoByEmailAndSiteUrl(dto.Email, dto.FrontUri);
         if (userInfo != null)
         {
@@ -51,7 +53,7 @@ public class LoginWithGoogleHandler : ILoginWithGoogleHandler
         {
             var userId = await _userService.AddUserByEmail(dto.Email);
 
-          var siteId=  await _siteService.CheckUserSiteWithGoogle(userId, dto.FrontUri);
+            var siteId=  await _siteService.CheckUserSiteWithGoogle(userId, dto.FrontUri);
             await _roleService.CheckUserRoleWithGoogle(userId, SystemRole.OAuthGuest);
 
             var getNewUserInfo = await _userService.GetUserInfoByEmailAndSiteUrl(dto.Email, dto.FrontUri);
