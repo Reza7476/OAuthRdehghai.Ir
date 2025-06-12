@@ -53,7 +53,7 @@ public class SiteAppService : ISiteService
         if (siteId > 0)
         {
             var userIsInSite = await _repository.IsUserBelongToSite(userId, siteId);
-            if (userIsInSite)
+            if (!userIsInSite)
             {
                 var newUserSite = new UserSite()
                 {
@@ -67,23 +67,20 @@ public class SiteAppService : ISiteService
         }
         else
         {
-            var newSiet = new Site() 
+            var newSite = new Site() 
             {
                 SiteName=url,
                 SiteUrl=url
             };
-
-            await _repository.Add(newSiet);
-            await _unitOfWork.Complete();
-
+            await _repository.Add(newSite);
             var newUserSite = new UserSite()
             {
-                SiteId = newSiet.Id,
+                SiteId = newSite.Id,
                 UserId = userId,
             };
             await _repository.AddUserSite(newUserSite);
             await _unitOfWork.Complete();
-            return newSiet.Id;
+            return newSite.Id;
         }
     }
 }
