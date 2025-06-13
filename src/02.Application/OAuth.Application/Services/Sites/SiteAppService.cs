@@ -67,20 +67,30 @@ public class SiteAppService : ISiteService
         }
         else
         {
-            var newSite = new Site() 
+            try
             {
-                SiteName=url,
-                SiteUrl=url
-            };
-            await _repository.Add(newSite);
-            var newUserSite = new UserSite()
+
+                var newSite = new Site()
+                {
+                    SiteName = url,
+                    SiteUrl = url
+                };
+                await _repository.Add(newSite);
+                await _unitOfWork.CommitPartial();
+                var newUserSite = new UserSite()
+                {
+                    SiteId = newSite.Id,
+                    UserId = userId,
+                };
+                await _repository.AddUserSite(newUserSite);
+                await _unitOfWork.Complete();
+                return newSite.Id;
+            }
+            catch (Exception ex)
             {
-                SiteId = newSite.Id,
-                UserId = userId,
-            };
-            await _repository.AddUserSite(newUserSite);
-            await _unitOfWork.Complete();
-            return newSite.Id;
+
+                throw;
+            }
         }
     }
 }
