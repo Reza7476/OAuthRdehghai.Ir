@@ -66,7 +66,6 @@ public class UserAppService : IUserService
             };
 
             await _repository.Add(newUser);
-            await _unitOfWork.Complete();
             return newUser.Id;
         }
 
@@ -104,7 +103,7 @@ public class UserAppService : IUserService
 
     public async Task<List<string>> GetUserRoles(string id, long siteId)
     {
-        return await _repository.GetUserRoles(id,siteId);
+        return await _repository.GetUserRoles(id, siteId);
     }
 
     public async Task<bool> IsExistByUserName(string userName)

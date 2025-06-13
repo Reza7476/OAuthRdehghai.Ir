@@ -12,8 +12,8 @@ using OAuth.Infrastructure;
 namespace OAuth.Infrastructure.Migrations
 {
     [DbContext(typeof(EFDataContext))]
-    [Migration("20250605165459_Initial")]
-    partial class Initial
+    [Migration("20250613140323_checkTable")]
+    partial class checkTable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
